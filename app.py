@@ -2,7 +2,10 @@ from flask import Flask, jsonify, request, make_response
 from flask_cors import CORS
 from flask_mysqldb import MySQL
 from flask_bcrypt import Bcrypt
+from dotenv import load_dotenv
+import os
 
+load_dotenv()
 
 # creates an instance of Flask class and assigns it to app variable
 # __name__ is a special Python variable that refers to current module
@@ -31,11 +34,15 @@ ALLOWED_EXTENSIONS = {'pdf', 'png', 'jpg', 'jpeg'}
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 # Configure MySQL connection
-app.config['MYSQL_HOST'] = 'localhost'
-app.config['MYSQL_USER'] = 'root'
-app.config['MYSQL_PASSWORD'] = 'ElonMusk$123'
-app.config['MYSQL_DB'] = 'auto_auction_hub_local'
-
+# app.config['MYSQL_HOST'] = 'localhost'
+# app.config['MYSQL_USER'] = 'root'
+# app.config['MYSQL_PASSWORD'] = 'ElonMusk$123'
+# app.config['MYSQL_DB'] = 'auto_auction_hub_local'
+app.config['MYSQL_HOST'] = os.environ.get('DB_HOST')
+app.config['MYSQL_USER'] = os.environ.get('DB_USER')
+app.config['MYSQL_PASSWORD'] = os.environ.get('DB_PASSWORD')
+app.config['MYSQL_DB'] = os.environ.get('DB_NAME')
+app.config['MYSQL_CURSORCLASS'] = 'DictCursor'
 
 mysql = MySQL(app)
 

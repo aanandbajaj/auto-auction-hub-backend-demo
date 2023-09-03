@@ -21,6 +21,8 @@ def import_auctions():
 def get_auctions():
     from app import mysql
 
+    cursor = None
+
     try:
         cursor = mysql.connection.cursor()
         query = f"SELECT * FROM {table_name}"

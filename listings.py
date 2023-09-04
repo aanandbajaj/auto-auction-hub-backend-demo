@@ -93,15 +93,16 @@ def get_listing_by_auction_id(auction_id):
 def count_listings_by_auction(auction_id):
     from app import mysql
 
-    try:
-        cursor = mysql.connection.cursor()
-        query = f"SELECT COUNT(*) FROM {table_name} WHERE auction_id = %s"
-        cursor.execute(query, (auction_id,))
-        count = cursor.fetchone()[0]
-        cursor.close()
+    response = jsonify({'count': 20})
 
-        response = jsonify({'count': 20})
-    except Exception as e:
-        response = jsonify({'error': str(e)}), 500
+    # try:
+    #     cursor = mysql.connection.cursor()
+    #     query = f"SELECT COUNT(*) FROM {table_name} WHERE auction_id = %s"
+    #     cursor.execute(query, (auction_id,))
+    #     count = cursor.fetchone()[0]
+    #     cursor.close()
+    #
+    # except Exception as e:
+    #     response = jsonify({'error': str(e)}), 500
 
     return response

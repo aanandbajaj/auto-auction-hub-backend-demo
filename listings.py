@@ -100,7 +100,7 @@ def count_listings_by_auction(auction_id):
         count = cursor.fetchone()[0]
         cursor.close()
 
-        response = jsonify({'count': 'test'})
+        response = jsonify({'count': 20})
     except Exception as e:
         response = jsonify({'error': str(e)}), 500
 

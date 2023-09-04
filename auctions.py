@@ -34,7 +34,7 @@ def get_auctions():
         if auctions:
             column_names = [desc[0] for desc in cursor.description]
             for auction in auctions:
-                auction_dict = dict(zip(column_names, auction))
+                auction_dict = {column_names[i]: auction[i] for i in range(len(column_names))}
                 auctions_list.append(auction_dict)
 
             response = jsonify({'auctions': auctions_list})

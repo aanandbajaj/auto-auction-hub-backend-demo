@@ -27,20 +27,10 @@ def get_auctions():
         cursor.execute(query)
         auctions = cursor.fetchall()
 
-        response = jsonify({'data': auctions})
-
-        #
-        # auctions_list = []
-        #
-        # if auctions:
-        #     column_names = [desc[0] for desc in cursor.description]
-        #     for auction in auctions:
-        #         auction_dict = {column_names[i]: auction[i] for i in range(len(column_names))}
-        #         auctions_list.append(auction_dict)
-        #
-        #     response = jsonify({'auctions': auctions_list})
-        # else:
-        #     response = jsonify({'auctions': []})
+        if auctions:
+            response = jsonify({'auctions': auctions})
+        else:
+            response = jsonify({'auctions': []})
 
     except Exception as e:
         response = jsonify({'error': str(e)}), 500

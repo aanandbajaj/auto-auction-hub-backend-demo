@@ -21,25 +21,26 @@ def import_auctions():
 def get_auctions():
     from app import mysql
 
-    cursor = None
-
     try:
         cursor = mysql.connection.cursor()
         query = f"SELECT * FROM {table_name}"
         cursor.execute(query)
         auctions = cursor.fetchall()
 
-        auctions_list = []
+        response = jsonify({'data': auctions})
 
-        if auctions:
-            column_names = [desc[0] for desc in cursor.description]
-            for auction in auctions:
-                auction_dict = {column_names[i]: auction[i] for i in range(len(column_names))}
-                auctions_list.append(auction_dict)
-
-            response = jsonify({'auctions': auctions_list})
-        else:
-            response = jsonify({'auctions': []})
+        #
+        # auctions_list = []
+        #
+        # if auctions:
+        #     column_names = [desc[0] for desc in cursor.description]
+        #     for auction in auctions:
+        #         auction_dict = {column_names[i]: auction[i] for i in range(len(column_names))}
+        #         auctions_list.append(auction_dict)
+        #
+        #     response = jsonify({'auctions': auctions_list})
+        # else:
+        #     response = jsonify({'auctions': []})
 
     except Exception as e:
         response = jsonify({'error': str(e)}), 500

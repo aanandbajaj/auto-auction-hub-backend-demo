@@ -71,18 +71,18 @@ def get_listing_by_auction_id(auction_id):
         cursor.execute(query, (auction_id,))
         listings = cursor.fetchall()
 
-        listings_list = []
+        # listings_list = []
+        #
+        # column_names = [desc[0] for desc in cursor.description]
+        # cursor.close()
+        #
+        #
+        # for listing in listings:
+        #     listing_dict = {column_names[i]:listing[i] for i in range(len(column_names))}
+        #     listings_list.append(listing_dict)
 
-        column_names = [desc[0] for desc in cursor.description]
-        cursor.close()
 
-
-        for listing in listings:
-            listing_dict = {column_names[i]:listing[i] for i in range(len(column_names))}
-            listings_list.append(listing_dict)
-
-
-        response = jsonify({'listings': listings_list})
+        response = jsonify({'listings': listings})
     except Exception as e:
         response = jsonify({'error': str(e)}), 500
 

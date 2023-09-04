@@ -97,7 +97,7 @@ def count_listings_by_auction(auction_id):
         cursor = mysql.connection.cursor()
         query = f"SELECT COUNT(*) FROM {table_name} WHERE auction_id = %s"
         cursor.execute(query, (auction_id,))
-        count = cursor.fetchone()
+        count = cursor.fetchone()[0]
         cursor.close()
 
         response = jsonify({'count': count})

@@ -17,27 +17,44 @@ def import_listings():
     upload_csv(mysql, LISTINGS_CSV_PATH, table_name)
     return jsonify({'message': 'Auctions imported successfully'})
 
+# Local code - commented out
+# @listings_bp.route('/api/count_listing_images/<int:listing_id>',methods=['GET'])
+# def get_num_of_images_by_listing_id(listing_id):
+#     images_folder = r'C:\Users\aanan\Documents\Projects\Auto Auction Hub\auto-auction-hub\src\assets\images\Cars'
+#     image_links = []
+#
+#     image_count = 0
+#     for filename in os.listdir(images_folder):
+#         if filename.startswith(str(listing_id) + '_') and filename.endswith('.jpg'):
+#             image_count = image_count + 1
+#             image_links.append(os.path.join(images_folder, filename))  # Corrected this line
+#
+#     response_data = {
+#         'image_count': image_count,
+#         'image_links': image_links
+#     }
+#
+#     response = jsonify(response_data)
+#     return response
+
 @listings_bp.route('/api/count_listing_images/<int:listing_id>',methods=['GET'])
 def get_num_of_images_by_listing_id(listing_id):
-    images_folder = r'C:\Users\aanan\Documents\Projects\Auto Auction Hub\auto-auction-hub\src\assets\images\Cars'
-    image_links = []
+    from firebase_utils import bucket
 
     image_count = 0
-    for filename in os.listdir(images_folder):
-        if filename.startswith(str(listing_id) + '_') and filename.endswith('.jpg'):
-            image_count = image_count + 1
-            image_links.append(os.path.join(images_folder, filename))  # Corrected this line
+    image_links = []
+
+    blobs = bucket.list_blobs(prefix=f"images\{listing_id}_")
+    for blob in blobs:
+        image_count +=1
+        image_links.append(blob.public_url)
 
     response_data = {
-        'image_count': image_count,
-        'image_links': image_links
+        'image_count':image_count,
+        'image_links':image_links
     }
 
-    print(response_data)
-
-    response = jsonify(response_data)
-    return response
-
+    return response_data
 
 @listings_bp.route('/api/get_listing_by_id/<int:listing_id>', methods=['GET'])
 def get_listing(listing_id):
@@ -70,17 +87,6 @@ def get_listing_by_auction_id(auction_id):
         query = f"SELECT * FROM {table_name} WHERE auction_id = %s"
         cursor.execute(query, (auction_id,))
         listings = cursor.fetchall()
-
-        # listings_list = []
-        #
-        # column_names = [desc[0] for desc in cursor.description]
-        # cursor.close()
-        #
-        #
-        # for listing in listings:
-        #     listing_dict = {column_names[i]:listing[i] for i in range(len(column_names))}
-        #     listings_list.append(listing_dict)
-
 
         response = jsonify({'listings': listings})
     except Exception as e:

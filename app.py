@@ -5,6 +5,7 @@ from flask_bcrypt import Bcrypt
 from dotenv import load_dotenv
 import os
 
+
 load_dotenv()
 
 # creates an instance of Flask class and assigns it to app variable
@@ -45,6 +46,7 @@ app.config['MYSQL_DB'] = os.environ.get('DB_NAME')
 app.config['MYSQL_CURSORCLASS'] = 'DictCursor'
 
 mysql = MySQL(app)
+
 
 
 @app.route('/')
@@ -116,6 +118,6 @@ def signup():
 
 if __name__ == '__main__':
     # Use the PORT environment variable if available
-    port = int(os.environ.get("PORT", 5000))
+    port = int(os.environ.get("PORT", 5001))
     app.run(host='0.0.0.0', port=port)
 

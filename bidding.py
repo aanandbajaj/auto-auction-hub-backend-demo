@@ -55,11 +55,10 @@ def get_max_bid(listing_id):
         cursor = mysql.connection.cursor()
         query = "SELECT MAX(amount) FROM bids WHERE listing_id = %s"
         cursor.execute(query, (listing_id,))
-        max_bid = cursor.fetchone()
+        max_bid = cursor.fetchone()["MAX(amount)"]
         cursor.close()
-        max_bid_value = max_bid[0]
 
-        response = jsonify({'max_bid': max_bid_value})
+        response = jsonify({'max_bid': max_bid})
 
     except Exception as e:
         response = jsonify({'error': str(e)}), 500

@@ -27,7 +27,6 @@ googleapis-common-protos==1.60.0
 greenlet==2.0.2
 grpcio==1.57.0
 grpcio-status==1.57.0
-heroku==0.1.4
 httplib2==0.22.0
 idna==3.4
 itsdangerous==2.1.2
@@ -37,7 +36,6 @@ msgpack==1.0.5
 mysql==0.0.3
 mysqlclient==2.2.0
 numpy==1.25.1
-pandas==2.0.3
 proto-plus==1.22.3
 protobuf==4.24.2
 pyasn1==0.5.0

@@ -56,7 +56,7 @@ def get_max_bid(listing_id):
         cursor = mysql.connection.cursor()
         query = "SELECT MAX(amount) FROM bids WHERE listing_id = %s"
         cursor.execute(query, (listing_id,))
-        max_bid = cursor.fetchone()[0]
+        max_bid = cursor.fetchone()
         cursor.close()
 
         response = jsonify({'max_bid': max_bid})

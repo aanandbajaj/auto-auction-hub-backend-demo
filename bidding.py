@@ -47,7 +47,7 @@ def submit_bid():
 
     return response
 
-
+["MAX(amount)"]
 @bidding_bp.route('/api/get_max_bid/<int:listing_id>', methods=['GET'])
 def get_max_bid(listing_id):
     from app import mysql
@@ -59,7 +59,7 @@ def get_max_bid(listing_id):
         max_bid = cursor.fetchone()
         cursor.close()
 
-        response = jsonify({'max_bid': max_bid})
+        response = jsonify({'max_bid': max_bid[0]})
 
     except Exception as e:
         response = jsonify({'error': str(e)}), 500

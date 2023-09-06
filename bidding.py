@@ -57,8 +57,9 @@ def get_max_bid(listing_id):
         cursor.execute(query, (listing_id,))
         max_bid = cursor.fetchone()
         cursor.close()
+        max_bid_value = max_bid[0]
 
-        response = jsonify({'max_bid': max_bid[0]})
+        response = jsonify({'max_bid': max_bid_value})
 
     except Exception as e:
         response = jsonify({'error': str(e)}), 500

@@ -47,7 +47,6 @@ def submit_bid():
 
     return response
 
-["MAX(amount)"]
 @bidding_bp.route('/api/get_max_bid/<int:listing_id>', methods=['GET'])
 def get_max_bid(listing_id):
     from app import mysql

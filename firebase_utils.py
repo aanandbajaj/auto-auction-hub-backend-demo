@@ -35,7 +35,7 @@ def upload_car_images_test(image_folder, destination_folder):
     for filename in os.listdir(image_folder):
         if filename.endswith('.jpg'):
             local_image_path = os.path.join(image_folder, filename)
-            remote_image_path = os.path.join(destination_folder, filename)
+            remote_image_path = filename
 
             blob = bucket.blob(remote_image_path)
             blob.upload_from_filename(local_image_path)

@@ -44,7 +44,7 @@ def get_num_of_images_by_listing_id(listing_id):
     image_count = 0
     image_links = []
 
-    blobs = bucket.list_blobs(prefix=f"images\{listing_id}_")
+    blobs = bucket.list_blobs(prefix=f"{listing_id}_")
     for blob in blobs:
         image_count +=1
         image_links.append(blob.public_url)

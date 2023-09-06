@@ -50,9 +50,7 @@ def get_auction(auction_id):
         auction = cursor.fetchone()
 
         if auction:
-            column_names = [desc[0] for desc in cursor.description]
-            auction_dict = dict(zip(column_names, auction))
-            response = jsonify(auction_dict)
+            response = jsonify({'auction':auction})
         else:
             response = jsonify({'message': 'Auction not found'}), 404
     except Exception as e:

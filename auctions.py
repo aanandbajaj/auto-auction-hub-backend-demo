@@ -76,7 +76,7 @@ def get_auction_details_by_listing(listingCode):
         cursor.execute(query,(listingCode,))
         auction_details = cursor.fetchone()
 
-        response = jsonify({'auction':auction_details})
+        response = jsonify(auction_details)
     except Exception as e:
         response = jsonify({'error':str(e)}),500
 

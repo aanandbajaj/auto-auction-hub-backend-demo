@@ -64,14 +64,9 @@ def get_listing(listing_id):
         cursor = mysql.connection.cursor()
         query = f"SELECT * FROM {table_name} WHERE listingCode = %s"
         cursor.execute(query, (listing_id,))
-        listings = cursor.fetchall()
+        listing = cursor.fetchall()
 
-        column_names = [desc[0] for desc in cursor.description]
-        cursor.close()
-        for listing in listings:
-            listing_dict = {column_names[i]: listing[i] for i in range(len(column_names))}
-
-        response = jsonify({'listing': listing_dict})
+        response = jsonify({'listing': listing})
     except Exception as e:
         response = jsonify({'error': str(e)}), 500
 

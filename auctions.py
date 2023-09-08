@@ -76,13 +76,7 @@ def get_auction_details_by_listing(listingCode):
         cursor.execute(query,(listingCode,))
         auction_details = cursor.fetchone()
 
-
-        if auction_details:
-            column_names = [desc[0] for desc in cursor.description]
-            auction_dict = {column_names[i]: auction_details[i] for i in range(len(column_names))}
-            response = jsonify(auction_dict)
-        else:
-            response = jsonify({'error':'Auction details not found'})
+        response = jsonify({'auction':auction_details})
     except Exception as e:
         response = jsonify({'error':str(e)}),500
 

@@ -27,7 +27,7 @@ def submit_bid():
 
         query = "SELECT MAX(amount) FROM bids WHERE listing_id = %s"
         cursor.execute(query, (listing_id,))
-        max_bid = cursor.fetchone()[0]
+        max_bid = cursor.fetchone()["MAX(amount)"]
 
         if max_bid is None or bid_amount > max_bid:
             # bid amount valid

@@ -58,6 +58,38 @@ def index():
 # @app.route('/') tells Flask that when user accesses the root URl of the application ('/'), the hello() function should be executed
 # in Flask, routes are defined using @app.route decorator
 # when you use @app.route('/') before function, it associates function with specified route, in this case ('/')
+# @app.route('/api/login', methods=['POST'])
+# def login():
+#     # login logic
+#     data = request.get_json()
+#
+#     print(data)
+#     username = data.get('username')
+#     password = data.get('password')
+#
+#     cur = mysql.connection.cursor()
+#     query = "SELECT id, password FROM users WHERE username = %s"
+#     cur.execute(query, (username,))
+#     user_data = cur.fetchone()
+#
+#     response = user_data
+#     print(user_data)
+#
+#
+#     if user_data and bcrypt.check_password_hash(user_data[1], password):
+#         user_id = user_data[0]  # Extract user ID from user_data
+#         # Password is correct, proceed with login
+#         # Return success response along with user ID
+#
+#         # Example success response
+#         response = jsonify({'message': 'Login successful', 'userId': user_id})
+#     else:
+#
+#         response = jsonify({'message': 'Invalid credentials'}), 401
+#
+#     cur.close()
+#     return response
+
 @app.route('/api/login', methods=['POST'])
 def login():
     # login logic
@@ -70,24 +102,12 @@ def login():
     cur = mysql.connection.cursor()
     query = "SELECT id, password FROM users WHERE username = %s"
     cur.execute(query, (username,))
-    user_data = cur.fetchall()
+    user_data = cur.fetchone()
 
-    response = user_data
-
-
-    # if user_data and bcrypt.check_password_hash(user_data[1], password):
-    #     user_id = user_data[0]  # Extract user ID from user_data
-    #     # Password is correct, proceed with login
-    #     # Return success response along with user ID
-    #
-    #     # Example success response
-    #     response = jsonify({'message': 'Login successful', 'userId': user_id})
-    # else:
-    #
-    #     response = jsonify({'message': 'Invalid credentials'}), 401
+    print(user_data)  # Print user_data to debug
 
     cur.close()
-    return response
+    return "Debug response"  # You can change this response for debugging purposes
 
 
 @app.route('/api/signup', methods=['POST'])

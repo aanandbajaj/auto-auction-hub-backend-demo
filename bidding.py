@@ -75,17 +75,11 @@ def get_recent_user_bid(listing_id, user_id):
         cursor.execute(query_check_bid, (listing_id, user_id))
         user_bid = cursor.fetchone()
 
-        if user_bid:
-            bid_amount = user_bid[0]
-        else:
-            bid_amount = None
-
-        cursor.close()
-
-        response = jsonify({'recent_bid': bid_amount})
+        response = jsonify({'recent_bid': user_bid})
     except Exception as e:
         response = jsonify({'error': str(e)}), 500
 
+    cursor.close()
     return response
 
 

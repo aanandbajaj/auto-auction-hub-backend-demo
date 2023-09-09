@@ -104,10 +104,8 @@ def login():
     cur.execute(query, (username,))
     user_data = cur.fetchone()
 
-    print(user_data)  # Print user_data to debug
-
     cur.close()
-    return "Debug response"  # You can change this response for debugging purposes
+    return jsonify({'message':username})  # You can change this response for debugging purposes
 
 
 @app.route('/api/signup', methods=['POST'])

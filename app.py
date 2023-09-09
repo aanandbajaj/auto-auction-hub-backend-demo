@@ -70,9 +70,9 @@ def login():
     cur = mysql.connection.cursor()
     query = "SELECT id, password FROM users WHERE username = %s"
     cur.execute(query, (username,))
-    user_data = cur.fetchone()
+    user_data = cur.fetchall()
 
-    response = user_data['id']
+    response = user_data
 
 
     # if user_data and bcrypt.check_password_hash(user_data[1], password):

@@ -72,17 +72,18 @@ def login():
     cur.execute(query, (username,))
     user_data = cur.fetchone()
 
-    if user_data and bcrypt.check_password_hash(user_data[1], password):
-        user_id = user_data[0]  # Extract user ID from user_data
-        # Password is correct, proceed with login
-        # Return success response along with user ID
+    response = jsonify(user_data)
 
-        # Example success response
-        print(user_id)
-        response = jsonify({'message': 'Login successful', 'userId': user_id})
-    else:
-
-        response = jsonify({'message': 'Invalid credentials'}), 401
+    # if user_data and bcrypt.check_password_hash(user_data[1], password):
+    #     user_id = user_data[0]  # Extract user ID from user_data
+    #     # Password is correct, proceed with login
+    #     # Return success response along with user ID
+    #
+    #     # Example success response
+    #     response = jsonify({'message': 'Login successful', 'userId': user_id})
+    # else:
+    #
+    #     response = jsonify({'message': 'Invalid credentials'}), 401
 
     cur.close()
     return response

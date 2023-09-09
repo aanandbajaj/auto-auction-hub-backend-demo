@@ -34,7 +34,7 @@ UPLOAD_FOLDER = ''
 ALLOWED_EXTENSIONS = {'pdf', 'png', 'jpg', 'jpeg'}
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
-# Configure MySQL connection
+# # Configure MySQL connection
 # app.config['MYSQL_HOST'] = 'localhost'
 # app.config['MYSQL_USER'] = 'root'
 # app.config['MYSQL_PASSWORD'] = 'ElonMusk$123'
@@ -104,8 +104,30 @@ def login():
     cur.execute(query, (username,))
     user_data = cur.fetchone()
 
+    if user_data:
+        if isinstance(user_data, dict):  # Check if user_data is a dictionary (JawsDB)
+            user_id = user_data['id']
+            hashed_password = user_data['password']
+        elif isinstance(user_data, tuple):  # Check if user_data is a tuple (MySQL)
+            user_id = user_data[0]
+            hashed_password = user_data[1]
+        else:
+            # Handle unsupported data format
+            response = jsonify({'message': 'Unsupported data format'}), 500
+            return response
+
+        if bcrypt.check_password_hash(hashed_password, password):
+            # Password is correct, proceed with login
+            # Return success response along with user ID
+            response = jsonify({'message': 'Login successful', 'userId': user_id})
+        else:
+            response = jsonify({'message': 'Invalid credentials'}), 401
+    else:
+        response = jsonify({'message': 'User not found'}), 404
+
     cur.close()
-    return jsonify(user_data[0])  # You can change this response for debugging purposes
+    return response
+
 
 
 @app.route('/api/signup', methods=['POST'])

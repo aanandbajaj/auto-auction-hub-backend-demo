@@ -72,7 +72,7 @@ def login():
     cur.execute(query, (username,))
     user_data = cur.fetchone()
 
-    response = user_data
+    response = user_data['id']
 
 
     # if user_data and bcrypt.check_password_hash(user_data[1], password):

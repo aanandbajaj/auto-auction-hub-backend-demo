@@ -26,14 +26,11 @@ def submit_bid():
         cursor = mysql.connection.cursor()
 
         query = "SELECT MAX(amount) FROM bids WHERE listing_id = %s"
-        print("Executing query:", query)
         cursor.execute(query, (listing_id,))
         max_bid = cursor.fetchone()[0]
-        print(max_bid)
 
         if max_bid is None or bid_amount > max_bid:
             # bid amount valid
-            print("hello!")
             query = "INSERT INTO bids (listing_id, user_id, amount) VALUES (%s, %s, %s)"
             cursor.execute(query, (listing_id, user_id, bid_amount))
             mysql.connection.commit()
@@ -125,17 +122,7 @@ def get_user_bid_listings(user_id):
         cursor.execute(query, (user_id,))
         bid_listings = cursor.fetchall()
 
-        # Get the column names
-        column_names = [desc[0] for desc in cursor.description]
-
-        # Create a list of dictionaries
-        bid_listings_dict = [dict(zip(column_names, listing)) for listing in bid_listings]
-
-        cursor.close()
-
-        print(bid_listings_dict)
-
-        response = jsonify({'bid_listings': bid_listings_dict})
+        response = jsonify({'bid_listings': bid_listings})
 
     except Exception as e:
         response = jsonify({'error': str(e)}), 500

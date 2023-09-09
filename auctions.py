@@ -50,7 +50,7 @@ def get_auction(auction_id):
         auction = cursor.fetchone()
 
         if auction:
-            response = jsonify({'auction':auction})
+            response = jsonify(auction)
         else:
             response = jsonify({'message': 'Auction not found'}), 404
     except Exception as e:

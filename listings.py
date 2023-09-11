@@ -1,6 +1,4 @@
-from flask import Blueprint, jsonify, request, make_response
-from flask_mysqldb import MySQL
-import os
+from flask import Blueprint, jsonify
 
 from config import TABLE_NAMES
 

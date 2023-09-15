@@ -29,4 +29,4 @@ Username: aanandbajaj
 Password: 500
 
 #Site credentials 2 (testing)
-{"message":"Credentials set successfully","password":"Arw{<V","username":"jackchan"}
+    {"message":"Credentials set successfully","password":"Arw{<V","username":"jackchan"}

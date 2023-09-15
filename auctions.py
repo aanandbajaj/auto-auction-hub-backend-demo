@@ -1,7 +1,9 @@
 from flask import Blueprint, jsonify
 from config import TABLE_NAMES
+
 import random
 from datetime import datetime, timedelta
+
 
 auctions_bp = Blueprint('auctions', __name__)
 AUCTIONS_CSV_PATH = r'C:\Users\aanan\Documents\Projects\Auto Auction Hub\auto-auction-hub\src\assets\auctions.csv'
@@ -85,16 +87,6 @@ def get_auction_details_by_listing(listingCode):
 
 
 # Add other routes and logic for auctions
-import random
-from datetime import datetime, timedelta
-
-# ...
-
-import random
-from datetime import datetime, timedelta
-
-# ...
-
 @auctions_bp.route('/api/update_auction_times', methods=['POST'])
 def update_auction_times():
     from app import mysql
@@ -126,6 +118,40 @@ def update_auction_times():
         response = jsonify({'message': 'Auction times updated successfully'})
     except Exception as e:
         response = jsonify({'error': str(e)}), 500
+
+    cursor.close()
+    return response
+
+@auctions_bp.route('/api/get_auction_status/<int:auction_id>',methods=['GET'])
+def get_auction_status(auction_id):
+    from app import mysql
+
+    try:
+        cursor = mysql.connection.cursor()
+
+        query = f"SELECT * FROM {table_name} WHERE id = %s"
+        cursor.execute(query,(auction_id,))
+        auction = cursor.fetchone()
+
+        #if exists
+        if auction:
+            current_time = datetime.now()
+            start_time = auction['time']
+            end_time = auction['end_time']
+
+            if current_time < start_time:
+                status = "Not Started"
+            elif current_time >= start_time and current_time <= end_time:
+                status = "Active"
+            else:
+                status = "Ended"
+
+            response = jsonify({'status':status})
+        else:
+            response = jsonify({'message':'Auction not found'}),404
+
+    except Exception as e:
+        response = jsonify({'error':str(e)}),500
 
     cursor.close()
     return response

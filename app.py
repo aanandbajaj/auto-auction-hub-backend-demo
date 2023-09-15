@@ -11,7 +11,6 @@ load_dotenv()
 # creates an instance of Flask class and assigns it to app variable
 # __name__ is a special Python variable that refers to current module
 # in this case it will be "__main__" when script is executed as main program
-# why?
 app = Flask(__name__)
 CORS(app, resources={r"/api/*": {"origins": "*"}}, supports_credentials=True)
 
@@ -19,12 +18,14 @@ from auctions import auctions_bp
 from listings import listings_bp
 from user_management import user_management_bp
 from bidding import bidding_bp
+from contact_form import contact_form_bp
 
 # Register the blueprints along with the CORS instances
 app.register_blueprint(auctions_bp)
 app.register_blueprint(listings_bp)
 app.register_blueprint(user_management_bp)
 app.register_blueprint(bidding_bp)
+app.register_blueprint(contact_form_bp)
 
 bcrypt = Bcrypt()
 
@@ -35,15 +36,18 @@ ALLOWED_EXTENSIONS = {'pdf', 'png', 'jpg', 'jpeg'}
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 # # Configure MySQL connection
-app.config['MYSQL_HOST'] = 'localhost'
-app.config['MYSQL_USER'] = 'root'
-app.config['MYSQL_PASSWORD'] = 'ElonMusk$123'
-app.config['MYSQL_DB'] = 'auto_auction_hub_local'
-# app.config['MYSQL_HOST'] = os.environ.get('DB_HOST')
-# app.config['MYSQL_USER'] = os.environ.get('DB_USER')
-# app.config['MYSQL_PASSWORD'] = os.environ.get('DB_PASSWORD')
-# app.config['MYSQL_DB'] = os.environ.get('DB_NAME')
-# app.config['MYSQL_CURSORCLASS'] = 'DictCursor'
+if os.environ.get('FLASK_ENV') == 'development':
+    app.config['MYSQL_HOST'] = 'localhost'
+    app.config['MYSQL_USER'] = 'root'
+    app.config['MYSQL_PASSWORD'] = 'ElonMusk$123'
+    app.config['MYSQL_DB'] = 'auto_auction_hub_local'
+else:
+    app.config['MYSQL_HOST'] = os.environ.get('DB_HOST')
+    app.config['MYSQL_USER'] = os.environ.get('DB_USER')
+    app.config['MYSQL_PASSWORD'] = os.environ.get('DB_PASSWORD')
+    app.config['MYSQL_DB'] = os.environ.get('DB_NAME')
+
+app.config['MYSQL_CURSORCLASS'] = 'DictCursor'
 
 mysql = MySQL(app)
 

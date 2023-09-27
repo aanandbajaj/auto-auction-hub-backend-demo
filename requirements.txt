@@ -72,7 +72,7 @@ parso==0.8.3
 pdfminer.six==20221105
 pickleshare==0.7.5
 platformdirs==3.10.0
-sendgrid==7.10.0
+sendgrid==6.10.0
 prompt-toolkit==3.0.39
 proto-plus==1.22.3
 python-dotenv==0.19.1

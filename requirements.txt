@@ -72,6 +72,7 @@ parso==0.8.3
 pdfminer.six==20221105
 pickleshare==0.7.5
 platformdirs==3.10.0
+sendgrid==7.10.0
 prompt-toolkit==3.0.39
 proto-plus==1.22.3
 python-dotenv==0.19.1
@@ -110,8 +111,3 @@ uritemplate==4.1.1
 urllib3==1.26.16
 wcwidth==0.2.6
 webencodings==0.5.1
-Werkzeug==2.3.6
-wsproto==1.2.0
-xbrr==0.2.7.5
-yahoofinancials==1.16
-yfinance==0.2.27

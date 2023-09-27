@@ -40,8 +40,8 @@ def upload_car_images_test(image_folder, destination_folder):
             blob = bucket.blob(remote_image_path)
             blob.upload_from_filename(local_image_path)
 
-
-upload_car_images_test(
-    r'C:\Users\aanan\Documents\Projects\Auto Auction Hub\auto-auction-hub\src\assets\images\Cars',
-    'images'
-)
+#
+# upload_car_images_test(
+#     r'C:\Users\aanan\Documents\Projects\Auto Auction Hub\auto-auction-hub\src\assets\images\Cars',
+#     'images'
+# )

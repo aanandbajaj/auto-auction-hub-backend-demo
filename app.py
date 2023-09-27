@@ -12,7 +12,7 @@ load_dotenv()
 # __name__ is a special Python variable that refers to current module
 # in this case it will be "__main__" when script is executed as main program
 app = Flask(__name__)
-CORS(app, resources={r"/api/*": {"origins": "*"}})
+CORS(app, resources={r"/api/*": {"origins": "*", "supports_credentials": True}})
 
 from auctions import auctions_bp
 from listings import listings_bp

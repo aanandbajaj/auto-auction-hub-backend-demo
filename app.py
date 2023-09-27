@@ -42,6 +42,7 @@ if os.environ.get('FLASK_ENV') == 'development':
     app.config['MYSQL_PASSWORD'] = 'ElonMusk$123'
     app.config['MYSQL_DB'] = 'auto_auction_hub_local'
 else:
+    print(f"JAWSDB_URL: {os.environ.get('JAWSDB_URL')}")
     app.config['MYSQL_HOST'] = os.environ.get('DB_HOST')
     app.config['MYSQL_USER'] = os.environ.get('DB_USER')
     app.config['MYSQL_PASSWORD'] = os.environ.get('DB_PASSWORD')
